@@ -42,7 +42,7 @@ test.describe("Story ページ — コンテンツ（デフォルトロケール
 
   test("イントロ段落が表示される", async ({ page }) => {
     await expect(
-      page.getByText("Kisah kami bermula dari pertemuan tak terduga di aplikasi kencan")
+      page.getByText("Our story began at a small ceramics workshop in Kyoto")
     ).toBeVisible();
   });
 
@@ -60,7 +60,7 @@ test.describe("Story ページ — コンテンツ（デフォルトロケール
   });
 
   test("タイムラインカードのタイトルが表示される", async ({ page }) => {
-    await expect(page.getByText("Pertemuan Pertama")).toBeVisible();
+    await expect(page.getByText("A Chance Meeting")).toBeVisible();
   });
 });
 
@@ -83,7 +83,7 @@ test.describe("Story ページ — 英語/日本語ロケール", () => {
     await setLocale(page, "en");
     await page.goto("/story");
     await expect(
-      page.getByText("Our story began with a chance encounter on a dating app")
+      page.getByText("Our story began at a small ceramics workshop in Kyoto")
     ).toBeVisible();
     await expect(page.locator("h2", { hasText: "Our Journey" })).toBeVisible();
   });
@@ -92,7 +92,7 @@ test.describe("Story ページ — 英語/日本語ロケール", () => {
     await setLocale(page, "ja");
     await page.goto("/story");
     await expect(
-      page.getByText("マッチングアプリで偶然出会い")
+      page.getByText("ふたりの物語は、京都の小さな陶芸工房から始まりました。")
     ).toBeVisible();
     await expect(page.locator("h2", { hasText: "ふたりの歩み" })).toBeVisible();
   });

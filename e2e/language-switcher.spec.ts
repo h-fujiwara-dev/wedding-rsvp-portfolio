@@ -110,13 +110,13 @@ test.describe("言語スイッチャー — 言語の永続化", () => {
     await page.reload();
 
     await page.getByRole("button", { name: /Switch to EN/i }).click();
-    await expect(page.getByText("HOME")).toBeVisible();
+    await expect(page.locator("header").getByText("HOME")).toBeVisible();
 
     await page.goto("/story");
-    await expect(page.getByText("HOME")).toBeVisible();
+    await expect(page.locator("header").getByText("HOME")).toBeVisible();
 
     await page.goto("/details");
-    await expect(page.getByText("HOME")).toBeVisible();
+    await expect(page.locator("header").getByText("HOME")).toBeVisible();
   });
 
   test("日本語に切り替えてリロードしても日本語が維持される", async ({ page }) => {

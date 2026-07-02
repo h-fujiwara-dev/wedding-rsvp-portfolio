@@ -199,7 +199,7 @@ test.describe("二重送信防止", () => {
 
     const btn = page.getByTestId("rsvp-submit");
     await expect(btn.locator("svg")).toBeVisible();
-    await expect(btn).toHaveText(/Mengirim\.\.\./);
+    await expect(btn).toHaveText(/Sending\.\.\./);
 
     await expect(page.getByTestId("rsvp-success")).toBeVisible({ timeout: 10_000 });
   });
@@ -427,7 +427,7 @@ test.describe("ネットワーク異常", () => {
     await submitForm(page);
 
     await expect(page.getByTestId("rsvp-error")).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByText("Terjadi kesalahan jaringan.")).toBeVisible();
+    await expect(page.getByText("A network error occurred.")).toBeVisible();
   });
 
   test("ネットワークエラー後に再試行ボタンが有効になっている", async ({ page }) => {
