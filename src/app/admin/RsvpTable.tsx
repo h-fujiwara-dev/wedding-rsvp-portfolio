@@ -45,7 +45,8 @@ const WRAP_COLUMNS = new Set<keyof RsvpRow>(["address", "dietary_restrictions", 
 function formatCell(col: Column, row: RsvpRow, t: (key: string) => string): string {
   const val = row[col.key];
   if (col.key === "attend_or_absent") return val === "attend" ? t("admin.attend") : t("admin.absent");
-  if (col.key === "created_at" && val) return new Date(String(val)).toLocaleString("ja-JP");
+  if (col.key === "created_at" && val)
+    return new Date(String(val)).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
   return val != null ? String(val) : "—";
 }
 
