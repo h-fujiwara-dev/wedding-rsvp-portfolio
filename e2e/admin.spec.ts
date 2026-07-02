@@ -9,7 +9,7 @@
  *   - データなし時のメッセージが表示される（Supabase ダミー環境）
  *
  * 注意: テスト環境では Supabase が疎通しないため rows = [] となる。
- *       "まだ RSVP データがありません。" の表示を期待する。
+ *       "No RSVP data yet." の表示を期待する。
  *
  * 認証: /admin は HTTP Basic Auth で保護されている。
  *       テスト用の ADMIN_USERNAME / ADMIN_PASSWORD を使用。
@@ -40,19 +40,19 @@ test.describe("Admin ページ — 構造", () => {
     await expect(page.locator("header").first()).toContainText("Admin");
   });
 
-  test("集計 h2 が表示される（デフォルトロケール = インドネシア語）", async ({ page }) => {
-    await expect(page.locator("h2", { hasText: "Ringkasan" })).toBeVisible();
+  test("集計 h2 が表示される（デフォルトロケール = 英語）", async ({ page }) => {
+    await expect(page.locator("h2", { hasText: "Summary" })).toBeVisible();
   });
 
-  test("RSVP 一覧 h2 が表示される（デフォルトロケール = インドネシア語）", async ({ page }) => {
-    await expect(page.locator("h2", { hasText: "Daftar RSVP" })).toBeVisible();
+  test("RSVP 一覧 h2 が表示される（デフォルトロケール = 英語）", async ({ page }) => {
+    await expect(page.locator("h2", { hasText: "RSVP List" })).toBeVisible();
   });
 
   test("集計コンテンツ・空データメッセージ・取得エラーのいずれかが表示される", async ({ page }) => {
     // データあり → KPI cards（font-display text-5xl）が表示される
-    // データなし → "Belum ada data RSVP." が表示される
+    // データなし → "No RSVP data yet." が表示される
     // 接続エラー時 → role=alert のエラーバナーが表示される（TICKET-05）
-    const emptyMsg = page.getByText("Belum ada data RSVP.").first();
+    const emptyMsg = page.getByText("No RSVP data yet.").first();
     const kpiCard = page.locator(".text-5xl").first();
     const errorBanner = page.getByRole("alert");
     const either =
@@ -60,8 +60,8 @@ test.describe("Admin ページ — 構造", () => {
     expect(either).toBe(true);
   });
 
-  test("管理ダッシュボード ラベルが表示される（デフォルトロケール = インドネシア語）", async ({ page }) => {
-    await expect(page.getByText("Dasbor Admin")).toBeVisible();
+  test("管理ダッシュボード ラベルが表示される（デフォルトロケール = 英語）", async ({ page }) => {
+    await expect(page.getByText("Admin Dashboard")).toBeVisible();
   });
 
   test("日本語に切り替えると管理ダッシュボードのラベルも日本語になる（TICKET-05）", async ({ page }) => {
@@ -81,8 +81,8 @@ test.describe("Admin ページ — 構造", () => {
   });
 
   test("データなし時はフィルターチップと CSV ボタンが表示されない", async ({ page }) => {
-    await expect(page.getByText("Belum ada data RSVP.").first()).toBeVisible();
+    await expect(page.getByText("No RSVP data yet.").first()).toBeVisible();
     await expect(page.getByTestId("csv-download")).not.toBeAttached();
-    await expect(page.getByText("Semua")).not.toBeAttached();
+    await expect(page.getByText("All")).not.toBeAttached();
   });
 });

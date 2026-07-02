@@ -20,14 +20,14 @@ beforeEach(() => {
 });
 
 describe("LangProvider", () => {
-  it("defaults to id when nothing is stored", () => {
+  it("defaults to en when nothing is stored", () => {
     render(
       <LangProvider>
         <Probe />
       </LangProvider>
     );
-    expect(screen.getByTestId("locale").textContent).toBe("id");
-    expect(screen.getByTestId("translated").textContent).toBe("BERANDA");
+    expect(screen.getByTestId("locale").textContent).toBe("en");
+    expect(screen.getByTestId("translated").textContent).toBe("HOME");
   });
 
   it("adopts a valid seeded localStorage value on mount", async () => {
@@ -41,14 +41,14 @@ describe("LangProvider", () => {
     expect(document.documentElement.lang).toBe("en");
   });
 
-  it("ignores an invalid seeded localStorage value and stays on id", () => {
+  it("ignores an invalid seeded localStorage value and stays on en", () => {
     localStorage.setItem("wedding-lang", "fr");
     render(
       <LangProvider>
         <Probe />
       </LangProvider>
     );
-    expect(screen.getByTestId("locale").textContent).toBe("id");
+    expect(screen.getByTestId("locale").textContent).toBe("en");
   });
 
   it("setLocale updates rendered translated text", () => {
@@ -85,7 +85,7 @@ describe("LangProvider", () => {
 describe("useLang without a LangProvider ancestor", () => {
   it("returns the raw default context", () => {
     render(<Probe />);
-    expect(screen.getByTestId("locale").textContent).toBe("id");
+    expect(screen.getByTestId("locale").textContent).toBe("en");
     // Default context's t() is an identity passthrough
     expect(screen.getByTestId("translated").textContent).toBe("nav.home");
   });

@@ -247,8 +247,8 @@ test.describe("テキスト可読性", () => {
     await gotoRsvp(page);
 
     // 必須項目のラベル確認
-    await expect(page.getByText("Nama Lengkap")).toBeVisible();
-    await expect(page.getByText("Alamat Email")).toBeVisible();
+    await expect(page.getByText("Full Name")).toBeVisible();
+    await expect(page.getByText("Email Address")).toBeVisible();
   });
 
   test("エラーメッセージがモバイルでも読める（切れていない）", async ({ page, viewport }) => {
@@ -256,7 +256,7 @@ test.describe("テキスト可読性", () => {
     await gotoRsvp(page);
     await submitForm(page);
 
-    const errorMsg = page.getByText("Harap pilih kehadiran Anda");
+    const errorMsg = page.getByText("Please select your attendance");
     await expect(errorMsg).toBeVisible();
 
     const box = await errorMsg.boundingBox();

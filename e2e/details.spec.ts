@@ -35,28 +35,28 @@ test.describe("Details ページ — イベント情報", () => {
     await page.goto("/details");
   });
 
-  test("Tanggal セクションが表示される", async ({ page }) => {
-    await expect(page.locator("dt", { hasText: "Tanggal" })).toBeVisible();
+  test("Date セクションが表示される", async ({ page }) => {
+    await expect(page.locator("dt", { hasText: "Date" })).toBeVisible();
   });
 
-  test("Lokasi セクションが表示される", async ({ page }) => {
-    await expect(page.locator("dt", { hasText: "Lokasi" })).toBeVisible();
+  test("Venue セクションが表示される", async ({ page }) => {
+    await expect(page.locator("dt", { hasText: "Venue" })).toBeVisible();
   });
 
-  test("Mulai Upacara セクションが表示される", async ({ page }) => {
-    await expect(page.locator("dt", { hasText: "Mulai Upacara" })).toBeVisible();
+  test("Ceremony Begins セクションが表示される", async ({ page }) => {
+    await expect(page.locator("dt", { hasText: "Ceremony Begins" })).toBeVisible();
   });
 
-  test("Resepsi セクションが表示される", async ({ page }) => {
-    await expect(page.locator("dt", { hasText: "Resepsi" })).toBeVisible();
+  test("Reception セクションが表示される", async ({ page }) => {
+    await expect(page.locator("dt", { hasText: "Reception" })).toBeVisible();
   });
 
-  test("Tamu Musik セクションが表示される", async ({ page }) => {
-    await expect(page.locator("dt", { hasText: "Tamu Musik" })).toBeVisible();
+  test("Musical Guest セクションが表示される", async ({ page }) => {
+    await expect(page.locator("dt", { hasText: "Musical Guest" })).toBeVisible();
   });
 
-  test("Makan Malam セクションが表示される", async ({ page }) => {
-    await expect(page.locator("dt", { hasText: "Makan Malam" })).toBeVisible();
+  test("Dinner セクションが表示される", async ({ page }) => {
+    await expect(page.locator("dt", { hasText: "Dinner" })).toBeVisible();
   });
 });
 
@@ -65,16 +65,16 @@ test.describe("Details ページ — Travel & Stay", () => {
     await page.goto("/details");
   });
 
-  test("Perjalanan & Menginap h2 が表示される", async ({ page }) => {
-    await expect(page.locator("h2").filter({ hasText: "Perjalanan" })).toBeVisible();
+  test("Travel & Stay h2 が表示される", async ({ page }) => {
+    await expect(page.locator("h2").filter({ hasText: "Travel" })).toBeVisible();
   });
 
-  test("Cara Menuju Venue テキストが表示される", async ({ page }) => {
-    await expect(page.getByText("Cara Menuju Venue")).toBeVisible();
+  test("Getting Here テキストが表示される", async ({ page }) => {
+    await expect(page.getByText("Getting Here")).toBeVisible();
   });
 
-  test("Tempat Menginap テキストが表示される", async ({ page }) => {
-    await expect(page.getByText("Tempat Menginap")).toBeVisible();
+  test("Where to Stay テキストが表示される", async ({ page }) => {
+    await expect(page.getByText("Where to Stay")).toBeVisible();
   });
 });
 

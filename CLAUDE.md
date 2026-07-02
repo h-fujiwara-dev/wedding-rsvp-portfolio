@@ -31,7 +31,7 @@
 - **Groom**: KENJI
 - **Bride**: Sarah
 - **Monogram**: K&S (logo and footer use `K&S`)
-- **Target audience**: Indonesian guests → default language is Bahasa Indonesia
+- **Target audience**: International guests → default language is English (Bahasa Indonesia and Japanese also fully supported)
 
 ---
 
@@ -46,13 +46,13 @@
 ### Locale settings
 | Key | Value |
 |-----|-------|
-| Default locale | `"id"` (Bahasa Indonesia) |
+| Default locale | `"en"` (English) |
 | Available locales | `"id"` \| `"en"` \| `"ja"` |
 | localStorage key | `"wedding-lang"` |
 
 ### Language switcher
 - Location: `src/components/LanguageSwitcher.tsx`, rendered in `Header.tsx`
-- Button order: ID → EN → JA
+- Button order: EN → ID → JA
 - Active locale: gold (`text-wedding-gold`); inactive: dim cream
 
 ### Key translation keys

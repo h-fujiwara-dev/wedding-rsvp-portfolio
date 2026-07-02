@@ -59,21 +59,21 @@ export async function gotoRsvp(page: Page) {
 }
 
 export async function fillRequired(page: Page) {
-  await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+  await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
   await page.getByTestId("number-of-participants").fill("2");
   await page.getByTestId("name").fill("Budi Santoso");
   await page.getByTestId("email-address").fill("budi@example.com");
 }
 
 export async function fillRequiredAbsent(page: Page) {
-  await page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ }).check();
+  await page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true }).check();
   await page.getByTestId("number-of-participants").fill("2");
   await page.getByTestId("name").fill("Siti Rahayu");
   await page.getByTestId("email-address").fill("siti@example.com");
 }
 
 export async function fillAll(page: Page) {
-  await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+  await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
   await page.getByTestId("number-of-participants").fill("3");
   await page.getByTestId("name").fill("Budi Santoso");
   await page.getByTestId("email-address").fill("budi@example.com");

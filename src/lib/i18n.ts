@@ -1,7 +1,7 @@
 export type Locale = "id" | "en" | "ja";
-export const LOCALES: Locale[] = ["id", "en", "ja"];
+export const LOCALES: Locale[] = ["en", "id", "ja"];
 export const LOCALE_LABELS: Record<Locale, string> = { id: "ID", en: "EN", ja: "JA" };
-export const DEFAULT_LOCALE: Locale = "id";
+export const DEFAULT_LOCALE: Locale = "en";
 export type Translations = Record<string, string>;
 
 export function isLocale(value: unknown): value is Locale {

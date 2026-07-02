@@ -46,7 +46,7 @@ test.describe("XSS・インジェクション入力", () => {
 
       await expect(page.getByTestId("rsvp-form")).toBeVisible();
 
-      await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+      await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
       await page.getByTestId("name").fill(payload);
       await page.getByTestId("email-address").fill("test@example.com");
 
@@ -273,17 +273,17 @@ test.describe("フォーム状態の連続操作", () => {
     await gotoRsvp(page);
 
     await submitForm(page);
-    await expect(page.getByText("Harap pilih kehadiran Anda")).toBeVisible();
+    await expect(page.getByText("Please select your attendance")).toBeVisible();
 
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
-    await expect(page.getByText("Harap pilih kehadiran Anda")).not.toBeVisible();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
+    await expect(page.getByText("Please select your attendance")).not.toBeVisible();
   });
 
   test("必須フィールドを入力後クリアすると再度エラーが出る", async ({ page }) => {
     await mockRsvpSuccess(page);
     await gotoRsvp(page);
 
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("number-of-participants").fill("2");
     await page.getByTestId("name").fill("Budi Santoso");
     await page.getByTestId("email-address").fill("budi@example.com");
@@ -295,7 +295,7 @@ test.describe("フォーム状態の連続操作", () => {
     await mockRsvpSuccess(page);
     await gotoRsvp(page);
 
-    await page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true }).check();
     await expect(page.getByTestId("number-of-participants")).toBeVisible();
     await page.getByTestId("name").fill("Siti Rahayu");
     await page.getByTestId("email-address").fill("siti@example.com");
@@ -320,10 +320,10 @@ test.describe("フォーム状態の連続操作", () => {
     });
 
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("number-of-participants").fill("5");
 
-    await page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true }).check();
     await page.getByTestId("name").fill("Siti Rahayu");
     await page.getByTestId("email-address").fill("siti@example.com");
     await submitForm(page);
@@ -372,7 +372,7 @@ test.describe("API レスポンス形式", () => {
     });
 
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true }).check();
     await page.getByTestId("number-of-participants").fill("1");
     await page.getByTestId("name").fill("Siti Rahayu");
     await page.getByTestId("email-address").fill("siti@example.com");
@@ -397,7 +397,7 @@ test.describe("API レスポンス形式", () => {
     });
 
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("number-of-participants").fill("3");
     await page.getByTestId("name").fill("Budi Santoso");
     await page.getByTestId("email-address").fill("budi@example.com");
@@ -474,7 +474,7 @@ test.describe("送信データ完全性", () => {
     });
 
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("number-of-participants").fill("3");
     await page.getByTestId("name").fill("Budi Santoso");
     await page.getByTestId("email-address").fill("budi@example.com");
@@ -513,7 +513,7 @@ test.describe("送信データ完全性", () => {
     });
 
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("name").fill("Budi Santoso");
     await page.getByTestId("email-address").fill("  budi@example.com  ");
     await submitForm(page);

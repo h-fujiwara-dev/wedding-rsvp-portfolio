@@ -3,7 +3,7 @@
  *
  * Verifies:
  *   - Page structure (header, footer, timeline heading)
- *   - Content (intro paragraphs, timeline section, CTA section) in the default locale
+ *   - Content (intro paragraphs, timeline section, CTA section) in the default locale (en)
  *   - RSVP CTA → homepage #rsvp section navigation
  *   - REGISTRY is completely absent (CLAUDE.md requirement)
  *   - EN/JA locale content switches
@@ -31,7 +31,7 @@ test.describe("Story ページ — 構造", () => {
   });
 
   test("タイムライン h2 が表示される（デフォルトロケール）", async ({ page }) => {
-    await expect(page.locator("h2", { hasText: "Kisah Perjalanan Kami" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Our Journey" })).toBeVisible();
   });
 });
 
@@ -47,16 +47,16 @@ test.describe("Story ページ — コンテンツ（デフォルトロケール
   });
 
   test("タイムラインのeyebrow・見出し・サブテキストが表示される", async ({ page }) => {
-    await expect(page.getByText("Perjalanan", { exact: true })).toBeVisible();
-    await expect(page.locator("h2", { hasText: "Kisah Perjalanan Kami" })).toBeVisible();
-    await expect(page.getByText("Momen-momen yang membawa kami ke sini.")).toBeVisible();
+    await expect(page.getByText("Timeline", { exact: true })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Our Journey" })).toBeVisible();
+    await expect(page.getByText("The moments that brought us here.")).toBeVisible();
   });
 
   test("CTAセクションのテキストが表示される", async ({ page }) => {
     await expect(
-      page.getByText("Kami sangat bersyukur bisa merayakan awal yang baru ini")
+      page.getByText("We are so grateful to celebrate this new beginning")
     ).toBeVisible();
-    await expect(page.getByText("Perjalanan kami baru saja dimulai.")).toBeVisible();
+    await expect(page.getByText("Our journey is just getting started.")).toBeVisible();
   });
 
   test("タイムラインカードのタイトルが表示される", async ({ page }) => {

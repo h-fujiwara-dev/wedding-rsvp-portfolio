@@ -3,14 +3,14 @@
  *
  * RsvpForm rebuilds its Zod schema per locale (`useMemo(() => createRsvpSchema(t), [locale])`)
  * and posts `locale` in the /api/rsvp request body. rsvp-form.spec.ts / rsvp-api.spec.ts /
- * rsvp-edge-cases.spec.ts only exercise the default id locale — this file covers en/ja.
+ * rsvp-edge-cases.spec.ts only exercise the default en locale — this file covers id/ja.
  */
 
 import { test, expect, type Page } from "@playwright/test";
 import { mockRsvpSuccess, gotoRsvp, submitForm, setLocale } from "./helpers";
 
-// fillAll()/fillRequired() in helpers.ts hardcode the Indonesian radio labels
-// ("Hadir"/"Tidak Hadir"), so they can't be reused once the locale is switched.
+// fillAll()/fillRequired() in helpers.ts hardcode the English radio labels
+// ("Attend"/"Absent"), so they can't be reused once the locale is switched.
 async function fillRequiredEn(page: Page) {
   await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
   await page.getByTestId("number-of-participants").fill("2");
@@ -112,15 +112,15 @@ test.describe("JA ロケール — API 送信ボディ", () => {
 });
 
 test.describe("ロケール切り替え後にエラーメッセージ言語も追従する", () => {
-  test("id → EN 切り替え後、再送信すると英語エラーに変わる", async ({ page }) => {
+  test("デフォルト → ID 切り替え後、再送信するとインドネシア語エラーに変わる", async ({ page }) => {
     await mockRsvpSuccess(page);
     await gotoRsvp(page);
 
     await submitForm(page);
-    await expect(page.getByText("Harap pilih kehadiran Anda")).toBeVisible();
-
-    await page.getByRole("button", { name: /Switch to EN/i }).click();
-    await submitForm(page);
     await expect(page.getByText("Please select your attendance")).toBeVisible();
+
+    await page.getByRole("button", { name: /Switch to ID/i }).click();
+    await submitForm(page);
+    await expect(page.getByText("Harap pilih kehadiran Anda")).toBeVisible();
   });
 });

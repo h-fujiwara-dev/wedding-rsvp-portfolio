@@ -2,7 +2,7 @@
  * Language switcher tests
  *
  * Verifies:
- *   - Default language is Indonesian (id)
+ *   - Default language is English (en)
  *   - Switching to EN updates UI text
  *   - Switching to JA updates UI text
  *   - Language persists via localStorage across navigation
@@ -12,22 +12,22 @@
 import { test, expect } from "@playwright/test";
 import { waitForPreloaderGone } from "./helpers";
 
-test.describe("言語スイッチャー — デフォルト（インドネシア語）", () => {
+test.describe("言語スイッチャー — デフォルト（英語）", () => {
   test.beforeEach(async ({ page }) => {
     // Clear localStorage to reset to default locale
     await page.addInitScript(() => localStorage.removeItem("wedding-lang"));
     await page.goto("/");
   });
 
-  test("デフォルトでインドネシア語ナビが表示される", async ({ page }) => {
-    // In id locale, nav shows "BERANDA" for home
-    await expect(page.getByText("BERANDA")).toBeVisible();
+  test("デフォルトで英語ナビが表示される", async ({ page }) => {
+    // In en locale, nav shows "HOME" for home
+    await expect(page.getByText("HOME")).toBeVisible();
   });
 
-  test("デフォルトでRSVPセクションがインドネシア語", async ({ page }) => {
+  test("デフォルトでRSVPセクションが英語", async ({ page }) => {
     await waitForPreloaderGone(page);
     await page.locator("#rsvp").scrollIntoViewIfNeeded();
-    // rsvp.title in id is "KONFIRMASI KEHADIRAN" or similar
+    // rsvp.title in en is "RSVP" or similar
     await expect(page.locator("#rsvp h2").first()).toBeVisible();
   });
 
@@ -176,9 +176,9 @@ test.describe("言語スイッチャー — アクティブ状態", () => {
     await expect(page.getByText("BERANDA")).toBeVisible();
   });
 
-  test("不正な localStorage 値はデフォルト（id）にフォールバックする", async ({ page }) => {
+  test("不正な localStorage 値はデフォルト（en）にフォールバックする", async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem("wedding-lang", "fr"));
     await page.goto("/");
-    await expect(page.getByText("BERANDA")).toBeVisible();
+    await expect(page.getByText("HOME")).toBeVisible();
   });
 });

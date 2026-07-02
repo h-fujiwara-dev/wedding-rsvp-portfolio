@@ -32,24 +32,24 @@ test.describe("出欠フィールド", () => {
 
   test("未選択で送信すると必須エラーが表示される", async ({ page }) => {
     await submitForm(page);
-    await expect(page.getByText("Harap pilih kehadiran Anda")).toBeVisible();
+    await expect(page.getByText("Please select your attendance")).toBeVisible();
   });
 
-  test("「Hadir」を選択するとラジオが checked になる", async ({ page }) => {
-    const radio = page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true });
+  test("「Attend」を選択するとラジオが checked になる", async ({ page }) => {
+    const radio = page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true });
     await radio.check();
     await expect(radio).toBeChecked();
   });
 
-  test("「Tidak Hadir」を選択するとラジオが checked になる", async ({ page }) => {
-    const radio = page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ });
+  test("「Absent」を選択するとラジオが checked になる", async ({ page }) => {
+    const radio = page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true });
     await radio.check();
     await expect(radio).toBeChecked();
   });
 
-  test("Hadir → Tidak Hadir と切り替えられる", async ({ page }) => {
-    const attend = page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true });
-    const absent = page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ });
+  test("Attend → Absent と切り替えられる", async ({ page }) => {
+    const attend = page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true });
+    const absent = page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true });
     await attend.check();
     await expect(attend).toBeChecked();
     await absent.check();
@@ -59,9 +59,9 @@ test.describe("出欠フィールド", () => {
 
   test("参加人数フィールドは出欠選択に関わらず常に表示される", async ({ page }) => {
     await expect(page.getByTestId("number-of-participants")).toBeVisible();
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await expect(page.getByTestId("number-of-participants")).toBeVisible();
-    await page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true }).check();
     await expect(page.getByTestId("number-of-participants")).toBeVisible();
   });
 });
@@ -74,7 +74,7 @@ test.describe("参加人数フィールド", () => {
   test.beforeEach(async ({ page }) => {
     await mockRsvpSuccess(page);
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("name").fill("Budi Santoso");
     await page.getByTestId("email-address").fill("budi@example.com");
   });
@@ -94,19 +94,19 @@ test.describe("参加人数フィールド", () => {
   test("0 を入力するとエラーが表示される", async ({ page }) => {
     await page.getByTestId("number-of-participants").fill("0");
     await submitForm(page);
-    await expect(page.getByText("Masukkan minimal 1 orang")).toBeVisible();
+    await expect(page.getByText("Enter at least 1 person")).toBeVisible();
   });
 
   test("11 を入力するとエラーが表示される", async ({ page }) => {
     await page.getByTestId("number-of-participants").fill("11");
     await submitForm(page);
-    await expect(page.getByText("Masukkan maksimal 10 orang")).toBeVisible();
+    await expect(page.getByText("Enter at most 10 people")).toBeVisible();
   });
 
   test("出席時に空欄で送信すると必須エラーが表示される", async ({ page }) => {
     await page.getByTestId("number-of-participants").clear();
     await submitForm(page);
-    await expect(page.getByText("Jumlah peserta harus diisi")).toBeVisible();
+    await expect(page.getByText("Number of participants is required")).toBeVisible();
     await expect(page.getByTestId("rsvp-success")).not.toBeVisible();
   });
 });
@@ -119,14 +119,14 @@ test.describe("氏名フィールド", () => {
   test.beforeEach(async ({ page }) => {
     await mockRsvpSuccess(page);
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("number-of-participants").fill("2");
     await page.getByTestId("email-address").fill("budi@example.com");
   });
 
   test("空のまま送信すると必須エラーが表示される", async ({ page }) => {
     await submitForm(page);
-    await expect(page.getByText("Nama harus diisi")).toBeVisible();
+    await expect(page.getByText("Name is required")).toBeVisible();
   });
 
   test("1文字の名前は有効", async ({ page }) => {
@@ -156,7 +156,7 @@ test.describe("氏名フィールド", () => {
   test("101文字はエラーが表示される", async ({ page }) => {
     await page.getByTestId("name").fill("a".repeat(101));
     await submitForm(page);
-    await expect(page.getByText("Maksimal 100 karakter")).toBeVisible();
+    await expect(page.getByText("Maximum 100 characters")).toBeVisible();
   });
 });
 
@@ -168,14 +168,14 @@ test.describe("メールアドレスフィールド", () => {
   test.beforeEach(async ({ page }) => {
     await mockRsvpSuccess(page);
     await gotoRsvp(page);
-    await page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true }).check();
+    await page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true }).check();
     await page.getByTestId("number-of-participants").fill("2");
     await page.getByTestId("name").fill("Budi Santoso");
   });
 
   test("空のまま送信すると必須エラーが表示される", async ({ page }) => {
     await submitForm(page);
-    await expect(page.getByText("Email harus diisi")).toBeVisible();
+    await expect(page.getByText("Email is required")).toBeVisible();
   });
 
   const invalidEmails = [
@@ -190,7 +190,7 @@ test.describe("メールアドレスフィールド", () => {
     test(`"${desc}" は無効フォーマットエラーになる`, async ({ page }) => {
       await page.getByTestId("email-address").fill(value);
       await submitForm(page);
-      await expect(page.getByText("Format email tidak valid")).toBeVisible();
+      await expect(page.getByText("Invalid email format")).toBeVisible();
     });
   }
 
@@ -241,7 +241,7 @@ test.describe("年齢フィールド（任意）", () => {
   test("121 はエラーが表示される", async ({ page }) => {
     await page.getByTestId("age").fill("121");
     await submitForm(page);
-    await expect(page.getByText("Usia maksimal 120 tahun")).toBeVisible();
+    await expect(page.getByText("Maximum age is 120")).toBeVisible();
   });
 });
 
@@ -286,7 +286,7 @@ test.describe("郵便番号フィールド（任意）", () => {
     test(`${desc} "${value}" はエラーが表示される`, async ({ page }) => {
       await page.getByTestId("postcode").fill(value);
       await submitForm(page);
-      await expect(page.getByText("Format kode pos tidak valid")).toBeVisible();
+      await expect(page.getByText("Invalid postcode format")).toBeVisible();
     });
   }
 });
@@ -333,7 +333,7 @@ test.describe("電話番号フィールド（任意）", () => {
     test(`${desc} "${value}" はエラーが表示される`, async ({ page }) => {
       await page.getByTestId("phone-number").fill(value);
       await submitForm(page);
-      await expect(page.getByText("Format nomor telepon tidak valid")).toBeVisible();
+      await expect(page.getByText("Invalid phone number format")).toBeVisible();
     });
   }
 });
@@ -369,7 +369,7 @@ test.describe("食事制限フィールド（任意）", () => {
   test("501文字はエラーが表示される", async ({ page }) => {
     await page.getByTestId("dietary-restrictions").fill("a".repeat(501));
     await submitForm(page);
-    await expect(page.getByText("Maksimal 500 karakter")).toBeVisible();
+    await expect(page.getByText("Maximum 500 characters")).toBeVisible();
   });
 });
 
@@ -398,7 +398,7 @@ test.describe("メッセージフィールド（任意）", () => {
   test("1001文字はエラーが表示される", async ({ page }) => {
     await page.getByTestId("message").fill("a".repeat(1001));
     await submitForm(page);
-    await expect(page.getByText("Maksimal 1.000 karakter")).toBeVisible();
+    await expect(page.getByText("Maximum 1,000 characters")).toBeVisible();
   });
 });
 
@@ -414,7 +414,7 @@ test.describe("送信フロー", () => {
     await submitForm(page);
 
     await expect(page.getByTestId("rsvp-success")).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByText("Terima Kasih")).toBeVisible();
+    await expect(page.getByText("Thank You")).toBeVisible();
     await expect(page.getByTestId("rsvp-form")).not.toBeVisible();
   });
 
@@ -427,7 +427,7 @@ test.describe("送信フロー", () => {
     await expect(page.getByTestId("rsvp-success")).toBeVisible({ timeout: 10_000 });
   });
 
-  test("送信中はボタンが無効化されて「Mengirim...」と表示される", async ({ page }) => {
+  test("送信中はボタンが無効化されて「Sending...」と表示される", async ({ page }) => {
     await mockRsvpSuccess(page, 500);
     await gotoRsvp(page);
     await fillRequired(page);
@@ -436,7 +436,7 @@ test.describe("送信フロー", () => {
 
     const btn = page.getByTestId("rsvp-submit");
     await expect(btn).toBeDisabled();
-    await expect(btn).toHaveText("Mengirim...");
+    await expect(btn).toHaveText("Sending...");
 
     await expect(page.getByTestId("rsvp-success")).toBeVisible({ timeout: 10_000 });
   });
@@ -504,7 +504,7 @@ test.describe("アクセシビリティ", () => {
 
   test("エラーメッセージは role=alert または aria-live で通知される", async ({ page }) => {
     await submitForm(page);
-    await expect(page.getByText("Harap pilih kehadiran Anda")).toBeVisible();
+    await expect(page.getByText("Please select your attendance")).toBeVisible();
   });
 
   test("送信ボタンはキーボード（Enter）で動作する", async ({ page }) => {
@@ -516,8 +516,8 @@ test.describe("アクセシビリティ", () => {
   });
 
   test("ラジオグループは矢印キーで切り替えられる", async ({ page }) => {
-    const attendRadio = page.getByTestId("attend-radio").getByRole("radio", { name: "Hadir", exact: true });
-    const absentRadio = page.getByTestId("attend-radio").getByRole("radio", { name: /Tidak Hadir/ });
+    const attendRadio = page.getByTestId("attend-radio").getByRole("radio", { name: "Attend", exact: true });
+    const absentRadio = page.getByTestId("attend-radio").getByRole("radio", { name: "Absent", exact: true });
 
     await attendRadio.focus();
     await page.keyboard.press("ArrowRight");

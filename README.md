@@ -1,4 +1,4 @@
-# 💍 Wedding Invitation — KENJI & Sarah
+# 💍 Wedding Invitation & RSVP Platform
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -8,7 +8,7 @@
 
 A production-quality wedding invitation and RSVP web application built as a portfolio showcase. Guests receive a personalised digital invitation, confirm attendance, and submit dietary preferences — all in their preferred language.
 
-**Live audience:** Indonesian guests of KENJI & Sarah  
+**Live audience:** International wedding guests  
 **Wedding date:** Saturday, 14 November 2026  
 **Venue:** Kirana Estate, Jl. Raya Sayan, Sayan, Ubud, Gianyar, Bali, Indonesia
 
@@ -18,9 +18,9 @@ A production-quality wedding invitation and RSVP web application built as a port
 
 | Category | Details |
 |----------|---------|
-| **i18n** | Bahasa Indonesia (default) · English · Japanese — switch live via header, persisted in `localStorage` |
+| **i18n** | English (default) · Bahasa Indonesia · Japanese — switch live via header, persisted in `localStorage` |
 | **RSVP** | 10-field validated form (attendance, guests, name, email, age, address, dietary restrictions, message) |
-| **Page Transitions** | Awwwards-style full-screen charcoal curtain with staggered K & S monogram + "KENJI & Sarah" SplitText |
+| **Page Transitions** | Awwwards-style full-screen charcoal curtain with staggered couple monogram + SplitText name reveal |
 | **Animations** | Motion v12 scroll-driven reveals, countdown digit-flip, timeline beam, botanical SVG system |
 | **Maps** | Google Maps iframe embed for Kirana Estate, Ubud with greyscale-to-colour hover |
 | **Observability** | PostHog session recording · Sentry real-time error tracking |
@@ -101,7 +101,7 @@ wedding-rsvp/
 │   │   ├── VideoScroller.tsx           Shared scroll-video engine
 │   │   ├── TimelineBeam.tsx            Story timeline with scroll beam
 │   │   ├── Countdown.tsx               SSR-safe digit-flip countdown
-│   │   ├── Monogram.tsx                K & S monogram mark
+│   │   ├── Monogram.tsx                Couple initials monogram mark
 │   │   ├── Preloader.tsx               Initial load screen
 │   │   ├── ParticlesBackground.tsx     tsParticles ambient background
 │   │   ├── PageCurtain.tsx             Page transition overlay
@@ -236,7 +236,7 @@ Translations live in `src/lib/i18n.ts` as flat key/value objects. The `useLang()
 
 ## 🎬 Page Transitions
 
-Navigating between pages triggers a full-screen `wedding-charcoal` curtain that rises from the bottom, briefly reveals the **K & S** monogram with a staggered letter animation and "KENJI & Sarah" in SplitText style, then slides off the top to reveal the destination page. The implementation is in:
+Navigating between pages triggers a full-screen `wedding-charcoal` curtain that rises from the bottom, briefly reveals the couple's monogram with a staggered letter animation and their names in SplitText style, then slides off the top to reveal the destination page. The implementation is in:
 
 - `src/context/TransitionContext.tsx` — state machine (idle → covering → revealing → idle)
 - `src/components/PageCurtain.tsx` — the visual overlay driven by `useMotionValue`
