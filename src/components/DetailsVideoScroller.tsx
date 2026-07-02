@@ -11,9 +11,12 @@ import {
 } from "motion/react";
 import { useLenis } from "@/context/LenisContext";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+import { storageUrl } from "@/lib/media";
 
-const VIDEO_URL =
-  "https://xpjwqukhvphvonqstess.supabase.co/storage/v1/object/public/wedding-assets/details/Gen-4_5%20-%20A%20highly%20realistic%2C%20cinematic%20movie%20trailer_%20The%20camera%20starts%20from%20the%20low-angle%20perspect%204K.mp4";
+const VIDEO_URL = storageUrl(
+  "wedding-assets",
+  "details/Gen-4_5%20-%20A%20highly%20realistic%2C%20cinematic%20movie%20trailer_%20The%20camera%20starts%20from%20the%20low-angle%20perspect%204K.mp4"
+);
 const TAGLINE = "Kirana Estate, Ubud";
 
 function useBlurFilter(source: MotionValue<number>, inputRange: number[], pxRange: number[]) {

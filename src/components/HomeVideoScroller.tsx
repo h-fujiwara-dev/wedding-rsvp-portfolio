@@ -11,9 +11,12 @@ import {
 } from "motion/react";
 import { useLenis } from "@/context/LenisContext";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+import { storageUrl } from "@/lib/media";
 
-const VIDEO_URL =
-  "https://xpjwqukhvphvonqstess.supabase.co/storage/v1/object/public/wedding-assets/top/agent_generate_video%20-%20Shimmering_%20translucent%20gold%20and%20crystal%20diamonds%20floating%20e.mp4";
+const VIDEO_URL = storageUrl(
+  "wedding-assets",
+  "top/agent_generate_video%20-%20Shimmering_%20translucent%20gold%20and%20crystal%20diamonds%20floating%20e.mp4"
+);
 const TAGLINE = "16 · 08 · 2026";
 
 function useBlurFilter(source: MotionValue<number>, inputRange: number[], pxRange: number[]) {
