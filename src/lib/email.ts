@@ -162,10 +162,16 @@ export async function sendConfirmationEmail(data: RsvpFormValues, locale: Locale
   const copy = EMAIL_COPY[locale];
   const attending = data.attend_or_absent === "attend";
   const from = process.env.EMAIL_FROM ?? "noreply@example.com";
-  await getResend().emails.send({
+  // resend.emails.send() never throws — API-level failures (invalid key,
+  // unverified domain, etc.) resolve as { error } instead, so they must be
+  // checked explicitly or they're silently swallowed by the caller's catch.
+  const { error } = await getResend().emails.send({
     from: `KENJI & Sarah <${from}>`,
     to: data.email_address,
     subject: copy.subject(attending),
     html: buildConfirmationHtml(data, locale),
   });
+  if (error) {
+    throw new Error(`Resend send failed: ${error.name} — ${error.message}`);
+  }
 }

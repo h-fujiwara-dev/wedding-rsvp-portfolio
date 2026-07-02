@@ -118,6 +118,7 @@ export async function POST(req: NextRequest) {
   try {
     await sendConfirmationEmail(data, locale);
   } catch (emailError) {
+    Sentry.captureException(emailError, { extra: { stage: "resend_email" } });
     console.error("[RSVP] Email send failed:", emailError);
   }
 
