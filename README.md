@@ -39,6 +39,8 @@ A production-quality wedding invitation and RSVP web application built as a port
 
 <sub>Editable source: [`docs/diagrams/architecture.drawio`](docs/diagrams/architecture.drawio) — open with [diagrams.net](https://app.diagrams.net) or the VS Code "Draw.io Integration" extension.</sub>
 
+<sub>Service icons: official brand marks via [Simple Icons](https://simpleicons.org).</sub>
+
 **How it works:** a guest fills out `RsvpForm.tsx` on the homepage, which `POST`s to the `/api/rsvp` route handler. The route checks an Upstash Redis rate-limit gate (10 requests / 60s per IP), inserts the validated row into Supabase Postgres, and — without blocking the response — asks Resend to send a localized confirmation email. The admin dashboard (`/admin`, gated by Basic Auth in `middleware.ts`) reads the same Supabase table and renders it as a sortable table plus Recharts attendance/participant charts. Every page view is sent to PostHog, and client- and server-side errors are captured by Sentry.
 
 | Layer | Stack |
